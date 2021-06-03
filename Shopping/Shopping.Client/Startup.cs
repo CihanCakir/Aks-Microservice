@@ -25,7 +25,9 @@ namespace Shopping.Client
             services.AddControllersWithViews();
             services.AddHttpClient("ShoppingAPIClient", client =>
              {
-                 client.BaseAddress = new Uri("http://localhost:5000/"); //Shopping.API Url
+                 //client.BaseAddress = new Uri("http://localhost:5000/"); //Shopping.API Url
+                 client.BaseAddress = new Uri(Configuration["ShoppingAPIUrl"]); //Shopping.API Url
+
              });
         }
 

@@ -18,6 +18,7 @@ namespace Shopping.API.Data
 
 
             Products = database.GetCollection<Product>(configuration["DatabaseSettings:CollectionName"]);
+            SeedData(Products);
         }
 
         public IMongoCollection<Product> Products { get; }
