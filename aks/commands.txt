@@ -35,13 +35,13 @@ Create a resource group
 az group create --name myResourceGroup --location westeurope
 --
 Create an Azure Container Registry
-az acr create --resource-group myResourceGroup --name shoppingacr --sku Basic
+az acr create --resource-group myResourceGroup --name shoppingacrcc --sku Basic
 --
 Enable Admin Account for ACR Pull
-az acr update -n shoppingacr --admin-enabled true
+az acr update -n shoppingacrcc --admin-enabled true
 --
 Log in to the container registry
-az acr login --name shoppingacr
+az acr login --name shoppingacrcc
 Login Succeeded
 --
 Tag a container image
@@ -52,8 +52,8 @@ shoppingacr.azurecr.io
 --
 Tag your images
 
-docker tag shoppingapi:latest shoppingacr.azurecr.io/shoppingapi:v1
-docker tag shoppingclient:latest shoppingacr.azurecr.io/shoppingclient:v1
+docker tag shoppingapi:latest shoppingacrcc.azurecr.io/shoppingapi:v1
+docker tag shoppingclient:latest shoppingacrcc.azurecr.io/shoppingclient:v2
 
 Check
 docker images
@@ -61,24 +61,24 @@ docker images
 
 Push images to registry
 
-docker push shoppingacr.azurecr.io/shoppingapi:v1
-docker push shoppingacr.azurecr.io/shoppingclient:v1
+docker push shoppingacrcc.azurecr.io/shoppingapi:v1
+docker push shoppingacrcc.azurecr.io/shoppingclient:v2
 --
 List images in registry
-az acr repository list --name shoppingacr --output table
+az acr repository list --name shoppingacrcc --output table
 
 Result
 shoppingapi
 shoppingclient
 --
 See tags
-az acr repository show-tags --name shoppingacr --repository shoppingclient --output table
+az acr repository show-tags --name shoppingacrcc --repository shoppingclient --output table
 
 Result
 v1
 --
 Create AKS cluster with attaching ACR
-az aks create --resource-group myResourceGroup --name myAKSCluster --node-count 1 --generate-ssh-keys --attach-acr shoppingacr
+az aks create --resource-group myResourceGroup --name myAKSCluster --node-count 1 --generate-ssh-keys --attach-acr shoppingacrcc
 
 --
 Install the Kubernetes CLI
@@ -99,7 +99,6 @@ verify pod status
 Check Kube Config
 
 kubectl config get-contexts
-kubectl config current-context
 kubectl config use-context gcpcluster-k8s-1
 	Switched to context "gcpcluster-k8s-1"
 --
@@ -112,4 +111,4 @@ Clean All AKS and Azure Resources
 az group delete --name myResourceGroup --yes --no-wait
 
 -- CREATE IMAGE PULL SECRET FOR ACR CONTAINER
-kubectl create secret docker-registry acr-secret --docker-server=shoppingacrcc.azureacr.io --docker-username=shoppingacrcc --docker-password=gt+Gt5hqIIHfkhV4bBGprv6NBTdZHqNu --docker-email=dev.cihancakir@outlook.com
+kubectl create secret docker-registry acr-secret --docker-server=shoppingacrcc.azureacr.io --docker-username=shoppingacrcc --docker-password=c+aeQI0lgcZ2UmnhrjELDDv9XiJnf+tG --docker-email=dev.cihancakir@outlook.com
